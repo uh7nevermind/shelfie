@@ -86,7 +86,7 @@ div.modal-card-item h2 {
     font-weight: 800;
 }
 
-.modal-buttons-container {
+.modal-buttons-item-card-container {
     display: flex;
     justify-content: flex-end;
     width: 100%;
@@ -97,21 +97,7 @@ button.modal-button {
     transition: background-color 0.2s ease, filter 0.2s ease;
 }
 
-.apply {
-    background-color: var(--input-border-focus);
-    color: var(--text-primary);
-    padding: 8px 14px;
-}
-
-.apply:hover {
-    background-color: #336bb8; /* чуть темнее */
-}
-
-.apply:active {
-    filter: brightness(0.9);
-}
-
-.cancel {
+.cancel-sqr {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -125,6 +111,6 @@ button.modal-button {
     transition: color 0.2s ease;
 }
 
-.cancel:hover {
+.cancel-sqr:hover {
     color: #FF4C4C;
 }

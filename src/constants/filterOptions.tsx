@@ -12,7 +12,7 @@ export const filterOptions: FilterOptions = {
         { label: "Запланированно", value: "planned" },
         { label: "Смотрю", value: "watching" },
         { label: "Просмотрено", value: "finished" },
-        { label: "Брошено", value: "Dropped" },
+        { label: "Брошено", value: "dropped" },
     ],
     sort: {
         by: [ 

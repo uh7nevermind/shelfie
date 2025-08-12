@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 import { filterOptions } from "../../constants/filterOptions";
 import { useParams } from "react-router-dom";
 import { useMedia } from "../../context/context";
+import { useNavigate } from "react-router-dom";
 import "./ModalCardItem.css"
+import ModalConfirmation from "../ModalConfirmation/ModalConfirmation";
 
 export default function ModalCardItem() {
     const { items, setItems } = useMedia();
     const { id } = useParams();
-    
     const [tempItem, setTempItem] = useState(null);
+    const [isConfirmationVisible, setIsConfirmationVisible] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (items.length > 0) {
@@ -85,32 +88,37 @@ export default function ModalCardItem() {
                     </div>
                 </div>
 
-                <div className="modal-buttons-container">
-                    <button className="modal-button apply">Подтвердить</button>
-                    <button className="modal-button cancel">
+                <div className="modal-buttons-item-card-container flex-end">
+                    <button 
+                        className="modal-button apply" 
+                        onClick={() => tempItem === items.find(item => String(item.id) === id) ? navigate(-1) : setIsConfirmationVisible(true)}
+                    >
+                        Сохранить
+                    </button>
+                    <button 
+                        className="modal-button cancel-sqr" 
+                        onClick={() => navigate(-1)}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
-
                     </button>
                 </div>
 
-                {/*<div className="modal-card-rating-container">
-                    <label htmlFor="personal-rating">Личный рейтинг</label>
-                    <Rating 
-                        name="imdb-rating"
-                        max={10}
-                        value={tempItem.personalRating}
-                        onChange={(event, newValue) => {
-                            setTempItem(prev => ({
-                                ...prev,
-                                personalRating: newValue ?? 0,
-                            }));
+                {isConfirmationVisible && (
+                    <ModalConfirmation 
+                        text={"Вы действительно хотите сохранить изменения?"}
+                        onConfirmation={() => {
+                            setItems(prevItems => prevItems.map(item =>
+                                item.id === tempItem.id ? tempItem : item
+                            ));
+                            navigate(-1);
                         }}
-                        precision={0.5}
+                        onCancel={() => {
+                            setIsConfirmationVisible(false);
+                        }}
                     />
-                    <span className="rating-value">{tempItem.personalRating}</span>
-                </div>*/}
+                )}
             </div>
         </div>
     </div>

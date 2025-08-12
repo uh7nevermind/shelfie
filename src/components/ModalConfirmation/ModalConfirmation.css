@@ -1,0 +1,16 @@
+.modal-confirmation {
+    background-color: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+}
+
+.modal-buttons-confirmation-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem
+}
+

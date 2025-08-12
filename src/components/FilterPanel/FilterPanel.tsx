@@ -25,7 +25,7 @@ export default function FilterPanel() {
                         <select name="category">
                             <option value="" selected hidden>Категория</option>
                             {filterOptions.category.map(({ label, value }) => (
-                                <option value={value}>{label}</option>
+                                <option key={value} value={value}>{label}</option>
                             ))}
                         </select>
 
@@ -33,7 +33,7 @@ export default function FilterPanel() {
                         <select name="status">
                             <option value="" selected hidden>Статус</option>
                             {filterOptions.status.map(({ label, value }) => (
-                                <option value={value}>{label}</option>
+                                <option key={value} value={value}>{label}</option>
                             ))}
                         </select>
                     </div>
@@ -46,7 +46,7 @@ export default function FilterPanel() {
                         <label htmlFor="sortBy">Сортировать по:</label>
                         <select name="sortBy">
                             {filterOptions.sort.by.map(({ label, value }) => (
-                                <option value={value}>{label}</option>
+                                <option key={value} value={value}>{label}</option>
                             ))}
                         </select>
                     </div>
@@ -55,7 +55,7 @@ export default function FilterPanel() {
                         <label htmlFor="sortOrder">Порядок: </label>
                         <select name="sortOrder">
                             {filterOptions.sort.order.map(({ label, value }) => (
-                                <option value={value}>{label}</option>
+                                <option key={value} value={value}>{label}</option>
                             ))}
                         </select>
                     </div>
@@ -68,7 +68,7 @@ export default function FilterPanel() {
                     <div className="flex between">
                         <select name="watchedDateType">
                             {filterOptions.watchedDate.map(({ label, value }) => (
-                                <option value={value}>{label}</option>
+                                <option key={value} value={value}>{label}</option>
                             ))}
                         </select>
                         <input type="date" name="watchedDateInput"></input>

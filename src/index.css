@@ -9,6 +9,10 @@
   --input-border: #2A2E38;
   --input-border-focus: #3C7DD9;
   --input-placeholder: #9CA3AF;
+  --apply-button-bg: #3C7DD9;
+  --apply-button-bg-hover: #336bb8;
+  --cancel-button-border-bg: #5a7ea0;
+  --modal-bg: rgba(18, 21, 27, 0.7);
 }
 
 a {
@@ -85,12 +89,12 @@ main {
 }
 
 .modal-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(18, 21, 27, 0.7);
+  background-color: var(--modal-bg);
   backdrop-filter: blur(2px);
   display: flex;
   justify-content: center;
@@ -118,4 +122,36 @@ button {
 button {
   padding-left: 0;
   font-weight: 500;
+}
+
+.apply {
+  background-color: var(--apply-button-bg);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border: 2px solid transparent;
+}
+
+.apply:hover {
+  background-color: var(--apply-button-bg-hover); /* чуть темнее */
+}
+
+.apply:active {
+  filter: brightness(0.9);
+}
+
+.cancel {
+  background-color: transparent;
+  transition: background-color 0.2s, color 0.2s;
+  padding: 6px 12px;
+  cursor: pointer;
+  border: 2px solid var(--cancel-button-border-bg);
+}
+
+.cancel:hover {
+  background-color: var(--cancel-button-border-bg);
+  color: var(--text-primary);
+}
+
+.cancel:active {
+  filter: brightness(0.85);
 }
