@@ -1,0 +1,130 @@
+.modal-card-item {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 65rem;
+    margin: 10rem auto;
+    padding: 1.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 1rem;
+}
+
+.modal-card-img-status-container {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 1rem
+}
+
+div.modal-card-item img {
+    width: 100%;
+    height: fit-content;
+}
+
+.modal-card-item-info {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    gap: 2rem;
+}
+
+div.modal-card-item h2 {
+    width: 90%;
+    font-weight: 800;
+    font-size: 2.8rem;
+}
+
+.genres {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.genre {
+    list-style: none;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.item-overview {
+    line-height: 1.5;
+    max-width: 100%;
+    
+}
+
+.modal-card-rating-container {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.modal-card-rating-values-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.rating-value {
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.average {
+    color: #3C7DD9;
+}
+
+.personal {
+    color: #FFD369;
+}
+
+.rating-label {
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.modal-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+button.modal-button {
+    width: fit-content;
+    transition: background-color 0.2s ease, filter 0.2s ease;
+}
+
+.apply {
+    background-color: var(--input-border-focus);
+    color: var(--text-primary);
+    padding: 8px 14px;
+}
+
+.apply:hover {
+    background-color: #336bb8; /* чуть темнее */
+}
+
+.apply:active {
+    filter: brightness(0.9);
+}
+
+.cancel {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    right: 10px;
+    padding: 3px;
+    background-color: #2A2E38; /* тёмный фон */
+    color: #E06C75; /* мягкий красноватый оттенок */
+    border: none;
+    transition: color 0.2s ease;
+}
+
+.cancel:hover {
+    color: #FF4C4C;
+}

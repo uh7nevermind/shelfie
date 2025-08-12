@@ -1,0 +1,722 @@
+// File: c:\Users\rom4i\projects\shelfie\src\App.css
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\App.tsx
+import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar'
+
+import HomePage from './pages/HomePage';
+import LibraryPage from './pages/LibraryPage';
+
+import './App.css'
+import ScrollableRow from './components/ScrollableRow/ScrollableRow';
+import ItemLibrary from './components/ItemLibrary/ItemLibrary';
+
+function App() {
+  return (
+    <>
+    <Router>
+      <Navbar />
+      
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/library" element={<LibraryPage />} />
+          {/* <Route path="/item/:id" element={<ItemPage />} />
+          <Route path="/profile" element={<ProfilePage/>} />
+          <Route path="*" element={<NotFoundPage />} /> */}
+        </Routes> 
+      </main>
+
+    </Router>
+    </>
+  )
+}
+
+export default App
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\FilterPanel\FilterPanel.css
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\FilterPanel\FilterPanel.tsx
+export default function FilterPanel() {
+    return (
+        <form className="filter-panel-container zaglushka">
+            <div className="filter-panel-flex filter-panel-title">
+                <h3>Фильтры</h3>
+            </div>
+            <div className="filter-panel-group">
+                <select name="category">
+                    <option value="" disabled selected>Категория</option>
+                    <option value="all" >Все</option>
+                    <option value="films" >Фильмы</option>
+                    <option value="series" >Сериалы</option>
+                    <option value="anime" >Аниме</option>
+                </select>
+                <select name="status">
+                    <option value="" disabled selected>Статус</option>
+                    <option value="all" >Все</option>
+                    <option value="finished" >Просмотрено</option>
+                    <option value="watching" >Смотрю</option>
+                    <option value="planned" >Запланировано</option>
+                </select>
+            </div>
+
+            <div className="filter-panel-group">
+                <label htmlFor="sort">Сортировка по:</label>
+                <select name="sort">
+                    <option value="releaseDate">Дата релиза</option>
+                    <option value="imdbRating" >imdb рейтинг</option>
+                    <option value="personalRating" >Мой рейтинг</option>
+                    <option value="watchedDate" >Дата просмотра</option>
+                </select>
+            </div>
+        </form>
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\Footer\Footer.tsx
+export default function Footer () {
+    return (
+        
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\Item\Item.css
+.item-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.4rem;
+    background-color: var(--bg-card);
+    border-radius: 1rem;
+    padding: 1rem; 
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.item-card--fixed {
+    width: 25.5rem; 
+    height: 13rem;
+    flex-shrink: 0;
+}
+
+.item-card--fluid {
+    width: 100%;
+    aspect-ratio: 2.5 / 1;
+}
+
+.item-card:hover {
+    background-color: #3b3f49; /* тёмно-серый, светлее bg-card (#191C23), но не яркий */
+    color: #f0f0f0;            /* светлый текст для контраста */
+}
+
+img {
+    height: 100%;
+    border-radius: 1rem;
+}
+
+.item-card-desc {
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.add-card {
+    height: 13rem;
+    width: 25.5rem;
+    background-color: rgba(255, 255, 255, 0.05); /* очень прозрачный светлый фон */
+    border: 2px dashed rgba(255, 255, 255, 0.1); /* прозрачная светлая пунктирная рамка */
+    color: rgba(246, 248, 251, 0.4); /* полупрозрачный текст */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    border-radius: 8px;
+    user-select: none;
+}
+
+.add-card:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* чуть более яркий фон */
+    color: rgba(246, 248, 251, 0.7); /* более контрастный текст */
+    border-color: rgba(246, 248, 251, 0.3); /* более заметная рамка */
+}
+
+.plus-svg {
+    height: 4.5rem;
+    width: 4.5rem;
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\Item\Item.tsx
+import './Item.css'
+import statusLabels from '../../constants/statusLabels'
+
+export default function Item ({ item = null, type = null, className }) {
+    return type ? (
+         <a href="/something" className='add-card'>
+            <span></span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="plus-svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <p>Добавить в коллекцию</p>
+         </a>
+    ) : (
+        <a href="/something" className={`item-card ${className}`}>
+                <img src={item.image} />
+                <div className='item-card-desc'>
+                    <h3>{item.title}</h3>
+                    <p>{statusLabels[item.status]}</p>
+                </div>
+        </a>
+
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\ItemLibrary\ItemLibrary.css
+.library-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20.5rem, 1fr));
+    width: 75%;
+    height: fit-content;
+    gap: 1.6rem;
+}
+
+.zaglushka {
+    width: 25%;
+    background-color: var(--bg-card);
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\ItemLibrary\ItemLibrary.tsx
+import { useMedia } from "../../context/context";
+import statusLabels from "../../constants/statusLabels";
+import Item from "../Item/Item";
+import './ItemLibrary.css'
+
+export default function ItemLibrary () {
+    const { items, setItems } = useMedia();
+
+    return (
+        <section className="library-section layout-container">
+            {items.map(item => (
+                <Item key={item.id} item={item} className={"item-card--fluid"}/> 
+            ))}
+        </section>
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\Navbar\Navbar.css
+header {
+    height: 4.6rem;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    height: 100%;
+    
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2.4rem;
+    margin: 0 2rem;
+}
+
+.nav-container, ul {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.nav-container {
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+li {
+    list-style: none;
+    height: 100%;
+}
+
+li a {
+    color: var(--text-primary);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    font-size: 1.3rem;
+    transition: color 0.2s;
+}
+
+li a:hover {
+    color: #919498;
+}
+
+svg {
+    width: 1.7rem;
+    height: 1.7rem;
+}
+
+.vertical-line {
+    width: 1px;
+    border-left: solid 1px gray;
+    height: 50%;
+}
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\Navbar\Navbar.tsx
+import './Navbar.css';
+
+export default function Navbar() {
+    return (
+        <header>
+            <div className='navbar layout-container'>
+                <p className='logo'>Shelfie</p>
+                <div className='nav-container'>
+                    <ul>
+                        <li>
+                            <a href="/something">Фильмы</a>
+                        </li>
+                        <li>
+                            <a href="/something">Сериалы</a>
+                        </li>
+                        <li>
+                            <a href="/">Домой</a>
+                        </li>
+                        <li>
+                            <a href="/library">Библиотека</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="/something">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                            </a>
+                        </li>
+                        <span className='vertical-line'></span>
+                        <li>
+                            <a href="/something">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+                                </svg>
+                                Войти
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\Rating\Rating.tsx
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\ScrollableRow\ScrollableRow.css
+* {
+
+}
+
+.scrollable-section {
+    position: relative;
+    margin-top: 2.5rem;
+}
+
+
+.scroll-container {
+    display: flex;
+    gap: 1.6rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    margin-top: 1.5rem;
+    padding-bottom: 1rem;
+    padding: 0;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 49%; /* центр по высоте родителя */
+    z-index: 1000;
+    width: 4.8rem;
+    height: 4.8rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.scrollable-section:hover .scroll-btn{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scrl-btn:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #12151B;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.left {
+    left: -2.4rem;
+}
+
+.right {
+    right: -2.4rem;
+}
+
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\ScrollableRow\ScrollableRow.tsx
+import { useRef } from "react";
+import { useMedia } from "../../context/context";
+import { filterByStatus } from "../../features/filters";
+import statusLabels from "../../constants/statusLabels";
+import Item from "../Item/Item";
+import './ScrollableRow.css'
+
+export default function ScrollableRow ({ status, title }) {
+    const { items, setItems } = useMedia();
+    const scrollRef = useRef(null);
+    const filteredItems = filterByStatus(items, status);
+    function scrollLeft() {
+        scrollRef.current?.scrollBy({ left: -1084, behavior: 'smooth' })
+    }
+
+    function scrollRight() {
+        scrollRef.current?.scrollBy({ left: 1084, behavior: 'smooth' })
+    }
+
+    return (
+        <section className="scrollable-section layout-container">
+            <div className="section-header">
+                <h2 className="section-title">{statusLabels[status]}</h2>
+                {filteredItems.length > 4 && (
+                    <>
+                        <button className="left scroll-btn" onClick={scrollLeft}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                            </svg>
+                        </button>
+                        <button className="right scroll-btn" onClick={scrollRight}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            </svg>
+                        </button>
+                    </>
+                )}
+            </div>
+            <div className="scroll-container" ref={scrollRef}>
+                {filteredItems.map(item => (
+                    <Item key={item.id} item={item} className={"item-card--fixed"}/>
+                ))}
+                {filteredItems.length < 4 && (
+                    <Item type={"add-card"} />
+                )}
+            </div>
+        </section>
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\components\SearchBar\SearchBar.tsx
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\constants\filterOptions.tsx
+export const filterOptions = {
+    category: [
+        { label: "Все", value: "all" },
+        { label: "Фильмы", value: "films" },
+        { label: "Сериалы", value: "series" },
+        { label: "Аниме", value: "anime" },
+    ],
+    status: [
+        { label: "Все", value: "all" },
+        { label: "Просмотрено", value: "finished" },
+        { label: "Смотрю", value: "watching" },
+        { label: "Запланировано", value: "planned" },
+    ],
+    sort: {
+        by: [ 
+            { label: "Дата добавления", value: "addedDate" },
+            { label: "Дата релиза", value: "releaseDate" },
+            { label: "Дата просмотра", value: "finishedDate" },
+            { label: "IMDB рейтинг", value: "imdbRating" },
+            { label: "Мой рейтинг", value: "personalRating" },
+        ],
+        order: [
+            { label: "↓ Убывание", value: "desc" },
+            { label: "↑ Возрастание", value: "asc" },
+        ]
+    },
+    watchedDate: [ 
+        { label: "Любая", value: "any" },
+        { label: "До", value: "before" },
+        { label: "После", value: "after" },
+        { label: "В этот день", value: "on" },
+    ],
+    rating: {
+        personal: [
+            { label: "от", key: "min" },
+            { label: "до", key: "max" },
+        ],
+        imdb: [
+            { label: "от", key: "min" },
+            { label: "до", key: "max" },
+        ],
+    }
+}
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\constants\statusLabels.tsx
+const statusLabels = {
+        watching: "Смотрю",
+        planned: "Запланировано",
+        finished: "Просмотрено"
+    };
+
+export default statusLabels;
+
+// File: c:\Users\rom4i\projects\shelfie\src\context\context.tsx
+import { createContext, useContext, useState } from "react";
+
+const MediaContext = createContext(null);
+
+export const MediaProvider = ({ children }) => {
+    const [items, setItems] = useState(mediaItems);
+    const [filters, setFilters] = useState({
+        category: 'all',
+        status: 'all',
+        sort: {
+            by: 'releaseDate', // 'releaseDate' | 'imdbRating' | 'personalRating' | 'watchedDate'
+            order: 'desc' // 'asc' | 'desc'
+        },
+        watchedDate: {
+            mode: 'any', // 'any' | 'before' | 'after' | 'on'
+            value: null // ISO строка даты | null
+        },
+        rating: {
+            personal: null, // Число от 0 до 10 | null
+            imdb: null // Число от 0 до 10 | null
+        }
+    });
+    const [searchQuery, setSearchQuery] = useState("");
+
+    return (
+        <MediaContext.Provider value={{
+            items,
+            setItems,
+            filters,
+            setFilters,
+            searchQuery,
+            setSearchQuery,
+        }}>
+            {children}
+        </MediaContext.Provider>
+    );
+}
+
+export const useMedia = () => useContext(MediaContext);
+
+const mediaItems = [
+  {
+    title: "Властелин колец: Братство кольца",
+    image: "https://kinopoisk-ru.clstorage.net/R30GT4323/fbe5f9QvGWyq/4UUCM3o6wd8ZT0Uk9rBRCPzMp76w8VffKR1H87k8Czwm3F7xnbb4DHZYvDl9A2ggDWI6QHNGcjZgfzewzn2oj7Uld8fLz4TK_cuAAWPAFdw8OYOKJHQznvgokkZLzwm_BEt8km80-spiTOhIiPb91Ax36pQT0qMHZ1zWoqiqXqjipSBg7-qwzs_vd-Y1sSLOLj2mW-BDxZnJjQdyGsxq78SoTHIv5OipEZ7oXAjkLGTM5FmHEdYTRqXPMaHpWU25otQj4g_5kU5tfKUVN9Bzvk6Op3rQQfQpWo7mE-tN2w9EegwiXMRoeyI8q26YVv92jhSbRREnQzYUDnOByXtfCoEVYkFueRPuPo4ltrViE77-rkZ68nNU6svPJrPLLJgNBOq8EAwGK2hCLAsfa-Ut9Y2VWrdyJQFlFo6Bgit4LPnDZFPQf5jDLx-dlqcnoGIdHR_2mlBDZ9rqzzeiWm6b_kZ7rRAehZgLI_17j-olDjTNljlHMVZQZLUNkwKZam2ZgtRRURzo49zu7KXmldEDLDz9ZOqAw0SJaP8HA7jeyj42qY_AbJRIiHAdu91KBq8mXhVIhqA0ATYVzcHju5nfOOJmU8KOylCvDy21hNfAoi5NHubosHAU-usf50NonCt8tVmd8T7niQrB_XseyWcfh8-H2QWBN2JFdY_AQpm7PUpDZ1KQfUmzTj3sF5Q3cBEuTw7EmUITxds5fXZhOO3b3fQJ78PspdhrIYyIPknmHbWO5QhWQ9QRtGWPAjCLi60q42ayAqw6AOx9DPWHNhJTrnzt1YgAodYraJznQ1lvmN4lyd7z7bRLSrMsm27YlNy2PPRaVhFVwocVjrHDiHucy2KnkXEPi1O8DY63ZwVQEqytXYYpMBGVuaivVoAZL8tvt-o_YS7GGmgSvJksSAX_hm_HStfi98OHpS4zoOsLPapDR9GC7VjzbB2Ot7dH8pOeTT43mXLxlmnLHxRR-E-o3wV4fkBt5Cpqwk3ITFvmPCQNlmjnQTVypXWPo9DJi6_ZYPQQEC_bgX1N3IQER7AgXR-u5ErR4aSLWiz2sautiw53K_yjjQfJWkPNiayI1u_3j1Y6dVA0wjRWbwGxqbvsibMnU4AP-xE-jq62VkYwony-rqZbEtHnCttex5DJXVnfZPhNUXw2-Npz32nMuQQf1a8Wa6Wyx-JE5h3wsDmpHXgiVWHSH4qDX0y_xmZnYhJ_j61ki2Ej1DkaDfeD-ayrzhaY73B99Riak72qvjlU3ZWedkpXgnUQtPXfEPJraP3q4rUyEt_rkB0-3qY09qNAbUw_lJrQQ3Wq2eyXsOuey302SB1TzceZOEP8CX9o5z2lfnZodfMUYWVH3RMwKNpM2mKFsTEOmGFfb89Etbahkb1OT_QrQ9OHOJm9leFrflrflNi8sg12-QpATNltWxYvd381KraDVGAXJcxw4krpbfvxhHJDHpmB7Pys5fTXoFOePyxV2lLyJ6mYDLeCaX9q3wRbj-JPlxt4cA4bHMoH_hf9xmpXc5QzpSQv8ACZON-YcjRxc3x6cT7NvCSlFpLgTVyfxIkgoiSK6g0VwAssWJ-Wu86zreY4qjHtOa7YZe41n6dqtRAXEqTk76Mx-3vfKbEnY6E9mAPfLLy2VudxY6ytX6fKodNUuwvthFBKbCt-d1r8sk8UKDvDn1memPX918_FmxXR1LG3tI-wwMqpz3gTJ8Ph7vph7L-MdJVlYGB8_bwFu2HiJam67kWhqm36rdTID-P_Jfiaoh6Yf0gHLRWdBDjXggUAZVbsgdOJm72aIpZiM966Mwze34WUtlKAHA48JCsTkyeJ61-nccgOeU4GyB7SXjXqmLGP6Y7o9V0X30SYJnIEEyVUzdEyOmueq-CEccKfeiMPbQz0dFXyIC2cjMSq8CP2C7kdNVEJTXm-d8gcAR4m2LkAbqmMWSf-F79kWtWDtyMEB_4BIHm4DwhQ5cPzz5sQjR7Pp3b10tMMbVx0CDHxRauI74UDGR4pXAS4DROfBJi5wj_oPukWzjR8dkimEbYitOQNclDISQxoYncDUQwLc3zMP5d01jOB7sxfZ1rQwyXouIyWkjkNqL4GepwRXsWIucNdKEzah85Wv6Y69IGGUraXvcOyW2pdOpJFUQDsGJPdHpxWJQfyIc9ebrXIcBP02SlfNyOZDNsOZ2u_wy3UKsuwvuluiJR8Fbx3quZT1GEW9M2g0CkrLXnClSICXHpQzlzedqUHcJL8XW1nimAB5cqqjTfCSIwJDdUZz0DMJxs48U7rnSvV_HTuR5q3Q_ZzFuXd48G7uGxIkhRDs1xK4u9f3VdUR5NADp9-VHhREJZLeyxV8Xus6O3VG_1yLSQY-kI-iY84tV1UXTWbJeNFQlRWPEBAqpscqMEXcoAN27H-be2VlQew8p0-bWarMCOUaxuM95PKnbvtRhnckj92StrTzXn_C0TvFFzmiqRwdNOkFk0QMmh5zvly5wCRTnqjX6-OFKRkYtHPba6GWPGwFgl4jUezOK7IveZL3IFfJahq4i9LjcjnXgWv90rHUebAlgReoDCKa49qIjZDMlxYkYxu3_emd7CATKzcx5lhAce5efzVgkq_m3_lC98xXoeaqZCuGR8IpT0Vz4Z6x9MVQ0Rm_YOwmumPOdE3IlF86IEPfT9EBRRC44zNbnaaErE0-et9RWN4bao_lPkPw-0l6jhBLQoeCVdMJs0WmkfzRGO1Zk6gwdk539iS1FECrssxHL7_lXZUoJJMvz3E68LB1cvK71eRyl3aLicrDDItVjqZgb3pfOsnzbXN50pkoRVS9yRfwYObK57aklWTon9awRyN_5SW1KET_R8PlEhgofWqaS52Q_hvyK4FSvyR71eLG7EeqF64d8-l_6V6JIL3I6Sn7YGh6smtS-DUM9APSrO-PL7EFoViME6MXGQaEcNV-Rqu9AJKTet-RHhO8H12upnDXIkdeLc-p9-2SySgxCIVM",
+    status: "finished",
+    rating: 9.5,
+    id: 1
+  },
+  {
+    title: "Начало",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98rNASmQTikieiwoR_kA0AMvrk7_pMWCXtiVivmSQS2yEaqfpYdly5_11TQVUEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "watching",
+    rating: 8.7,
+    id: 2
+  },
+  {
+    title: "Игра престолов",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC59TFf0z8LwFaZOu9QBzHpjrdYQkQ7jlzj_wd90yF4HbuS0u_9BECLp2ly0z3dAjzsFrPhROVG7-zo_ZCNprF9RW39qlYqBtAL6FOSUQ8IjIPbIUtVohIJO3NuQDbd2d2eQ7MWPCA1pkJwB5a0DEt1qaPWwLxcAyK4yClcxbJFdUXhsTom2opZ0wzfvuEvUKBX5iWzMQKnnXsnosSyGT3NNktfxvA80YZ2pENKBCRLpY1DWmDEyNeeMEg1UKXqlYmh0aWWUtYKWVfsSxq9h2xILxINw6FSd92fZy6g8gnFJfqXFypwPD3K-lyTFqyol8VlA3qIPJwH7jTUTbzRkoXhXcVVPqYq4u232OvijUuA9PO6pTedPkOpiycekArlJdWW-z8SfCjFhoJo86Zw_HshZety4DQcu95sSN2IPY4tIRUFIV4uLg4p85jHMlFHbBSf3gUXkdY31UsLUrh-6elp-rsbspiovSbSqPNiYJgX3fkPqrhARN9SxHSZwCVG3QGVkUWGxsJ-Ndvcn6Ktazick3r5kznqJ1H3896Q-vn59U5rp7LUIA1u0txrTtSgl7Ut5068KIwHGjisqXTBcilRyZ1RavbG-ikTfNc2QS-krBeWzaMRtsPFR7PKPFohUWH647sSMKDpfn6Ehy7IhLuJ2bviEESIvwJMiCGQ4b6R8TFh_Rbi_j6tp2Rj-s1D9BiHZoHbFQqz3a8voihWlV2l5rs7ZoRoaYLyjL9KzKTTudn79hxE7KsWiIChwN3qqVmlxXkSqh7WGVtI-zJJ3xAYC1KBZ8FGW0Uf19q0pnFp-erHCwZkLJEGKhSbsuDY50VxByaEYCSD8kwgSRghRoFNVWm9Bj5iMiEPDK9yIX-k7FsexV8R1kNR62fCOF7VQV328y8O3OTRUo5cjx40vA81ZbNewLTs9zZMiAU8Xar58SX57TJy7urZB_BzIvlbiLzfRkEfJYpjoWsnHkjObRXN7kuTFoDwPRJG5D-OiBx7QR0PdhxsWJva_ASNJCEK5UWxnbGa5n6abScUQ3rBYzg4h0KRY8VOI9U3YzJApmG57Z4PP2LciBnaRpDDDsC4_wUth8K4IJi7rnxEHTgdet3pmc0xxmbaQh2reFf-IfOU5Gc2CcdVgvulP7ci2FYt9fWiN6tqGNwJ8g4EmyaIDFNpmX9uRKgsp96QIF3wSRKBldVpxepeTu4FD0zXbnl7-AgDtv27KZKrSft_PpCeUfVB5o8jkojIhXrWWK8iTHSDyaGv1mRA5EMeOFS1dL2yhenZrdnmPqYOHSvkL_qpf1AAUx6Vr92S-5X_DyoEXs25QQZvR_IYJE123piTRqDIx6GpBx4kTIBLZnCEqcxhKtGN2dVtmv6W9sG3gBdyTScMIJcmLc_p5gvFQ6dmwKpVUUl6g6--BGTxGrYAe-osoBNBWUNCPKDco24gtMHYuZatIU2F8YJGKuIxkwRDIq0rHGADRoWTCfrzActbtoRy9eGhslNf5oz0dWLqYDvSiLDTJanj5uTYXC8uyAgtUL3KWcntQXGaPrrGIbcMr_5lV5AMR2oRo8nqNzVzJy6INp1ZlQZTw54g3O3eAoRjLjAQt7kto56cbNAj-syYhUChivnJba1xXv56Tjm_wEeOVacs4NdixWNhOk-dey9muNJ57R2Ol7eWMCBhgsKIA250hH9BFfeevDzss6LMQAmQafZFmVVp9aI-4vZRhyCn-q1jdEgn2gG7rRYLUY8vblC2DalxJptLHtyECUryEEMCwDD30S17Gmw81M-KELDF3Nn-URGpifFqemY60SdUx86FZyAkn8Ktm9G6Q-kv45ZYSv2piYbHywqAhOHyznDL2rxMm80Jly5wbKwD7pygFQThhmmJmXE1WmrOQmk_rJ_iZVeYsOPqPVNVjnNV46-qhMbJIU0i4-sO7HxFnk4wayL4RLvdmUvCHDC4ixak2OEcLe518T3loer-LnZJCxDbZsFXmJD7ygWLxdILAWNb7ggOLTFV6mO7Pnw8efqurHvuzKzLPZmTRgTIqDNSjHytPNHmUd3lITHmKt5q5QfI884xD3ykWzodk70-f1l715Y8ypmhiSqPo-aAvHX6wmiL4gQwPy2dE-LIqOB33rwQhXyN8sWNRdV5GrZy1gknyFNiPSvcJJN6yZNR2mtpm8emtHJVRd2KYy-SlHTpDmIA77LwXPeh_UvGCIgIH44cWLF0VfLZTcEF8bbWUm61_yRPgj2P0ACDvllXpe5DncfPwtTaib19loMTupyw0VZSfCvGzFDLqZHP6vTEEIfizCglmDkqDc3JwYnWov5yIdusP4b1L1T0X5Kx30luQ9UTAyag3gmlyT7zS0ZcBAmu1vjr6ujMg0FlZy6MbEDXXvikNSCVOnVdIfFlIvr-Ej1TmMNq-YtsMENCKVOdmuutK9-uhAoV3Wk-WzNG7PRlQoJo8yIgTLt1redSmFRUS3qA9OmsKQZpBTkN2d4qQuIpC-gvtmHDcPCXJoE30WZ7XavP2jjOmd1l7jsrElx4RZ5OHAfuTAgLTfX7umxEMKcmcNTJsGGy5dkVIWmayubi3TsM8xJ94xgEq8Kpv7lyfzETJ4IAPpHZne5z5-pUOB1ONqSnklA0G-2Vr_L8iLAPajhc5XChYoER3dXlTjpWDlFnlH8CfS_0-IOi_ee91n_BG4OG1J5tdWEag0NqcKCB8q70K8rY_J9B2WuWCCw4L6aIUGlQWXYZiT3h3UI2Wu7N7yCncqFH7KzH8gGHiQ5HPXPX5hDOhe0h7m9XaoS0QZ5SdMuy5ER_OeWDpgi4QP-qOCxJHCmObc2d9fWScqYKASvY1w5Zb_S8e-qBW6kKpw1HfxYEPmm5VYJH4z4EIIEafpxnGrhcdzF573pkxMSjKuzEydw1En2VFeEtQiZKzgkjJCd2JXt4vBeWNUvJ6uM9u0MCuKpxyWEY",
+    status: "planned",
+    rating: 0,
+    id: 3
+  },
+  {
+    title: "Аватар",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98rNMZmQfpmieuwoIgxw1Qavqz6K9PWCXq11mvwndDjSEfrftYdlTr_gdURloEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "finished",
+    rating: 7.8,
+    id: 4
+  },
+  {
+    title: "Джокер",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98rN8UlgPumyeil991xQkFOPq1svRJWCW61luvwnIS2iFI-qpXcF24qlYBQVUEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "planned",
+    rating: 0,
+    id: 5
+  },
+  {
+    title: "Бойцовский клуб",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98qdERlg_skSeiloRzyQlUavq0uv0eWCW93guvmiQWjSES-_pVc1K7_QZSRFYEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "finished",
+    rating: 9.1,
+    id: 6
+  },
+  {
+    title: "Шерлок Холмс",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98rNEXlwDtlyeol9IjwwQFPPrmv_9OWCW62Vivw3MV2SEZq6sFJFLqqVNZEAQEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "watching",
+    rating: 8.3,
+    id: 7
+  },
+  {
+    title: "Твин Пикс",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC59TFf0zMXzGaBIvcwcnytjrdYQkAbimj2rl9J2wwkFOOW0s_9NTSHr2VC1w3BE2mkSsPtRcR26_lU_eiNqsU9MQHFkkrOBtFu_FuOVXN0lOu6NDtJChP0o3OWeMLp6e027x-eDOgVpoaYb65wTMd1pTN2iGQ8z640AN08QeLRyTkBSd7avvZd5yS_AnnDVMzHbgk_sW6zQTczwrRGbS0JJkcXctwkCUKmrLvqrPzvdXUXlgTERFt6iIhdIE2CiRnF5XnKdsr63eegX5bdn_zwLxb9F8H-45F314I4Ii098c6LyzowpAmu6iBDOvBUY6kV_9YkLLwPqviMwVih9vEJrRltOt4-BjVTQGs2Ja8wHJPKVb81wo-lA8PCCBLV0RE-56cSCKgdVqZYd1pAiDdF8f8-LES0jxbI1F3IlRrtoW1RrU6-tgLZlwQrGvVzPPBzpjEfFc5n0X8D7kQ6od3dgovnNqhMnS4GCLdahJhTKQ1j2vQcwNdyRHxhjN0CJVFN0TkqZl7uqYssb0JljxCk-6qV45FmW8H7vxbIEiXNzR4_N4qoABWeTgjDwqgsa6lltzIQGKgfqgyAubxp5hGlHY01Popu6i2X5M8K8WNUOMsuedehTgclbw9W3L6FFWWKi7-WCOSVel6kmy7IME-FWUNuvLTEGxIU9J00jcbdHb11yZL2etLpE1DXvj3vOGh_vomb2Uq7VXfnyrSqiaFpTpfnFnxQXfqiKJMWrDRv7WlDLqi4xH8GADCVtN36iSUV4W0W8jIyAaes-yb1a6SMfzK9m2We973vVzLMNnlFXRKbmyYcsBkCJvALMlQYE9mV69J4IOC3LuT0NVwFBiUNARHB0uamTuWf-L9ytQMEOIti8d9dTmel-6OC1LqB4XW2h68CFAjRQnJUQyb4zHcx5f9mAGQ0f1og9J0QIXrJdb1hUYLS6sI9Z_BDruXbIBTb5qlbHXo7hQsjwgjKEVkhJp8XvgxUxa4ynPuWaHDXRZGH2ii47Ms2zEQRmDkGaWkJ9TXeen5STdPQp5694xikX76ti2Ga_8V_f4YkwnlVjQbvUxJ4CL2K-pyPaug4c8HVt1KcHKALFrjEUQglOhlRpd1lXib-9pWjXMuKOQOICINe2RPFCjMdD3dSNFqJGcEe02uGcMzpmtLUGzLAcMdtuQOqMOAovwrIKDVI7W5xDdmRwaoKxmI5u_j_CqlbAGRvOlnnuXYjTeOzmigSQWXBqpfTDohc_RZaDEcGxLS_vRk7eojAwHfuCIBBoGma0QmlnQW2BqaK2aPcV_I9iwTMZ2rxj62CIx0_t-o8hoH5jap3M2rozBHeVgSHOqBYA_lxM9JAgMwT5nDIkbzRRkldwZ19AnpmuiF_QDPKtW9ckEeuyTfNtlftbwtCcEJ1YWWiC9-CpNBRYjpsH9IM1GstkcOWHJggTw54mKHUxZ71IW0JLZ5i3gY1j2S3nuWPUIAHOqmfkVZLFauDvqAGrcHVSsMPcvxYweZCMH-SNHB77fUzNrhAWM-COHAdOE2aqdWFqekeeqaWEZ9Av3I5RywMa36FC6GWW9GfO8I4CumpbX53D-6E9Ol-_tibysjI24lpt3bAOOxDjux0jZBdhul1hSkFHr5mVpmHSHOaSXfcsIfujd9hPoupNzPKcDoNTdn2_8uajOQV8qIYl6qIjE9BkY8iwBi8fx60dFUcjU6VydURwZpCps4h73CTej2PGOgvHjUbufKn7fvHynjSaTmdmlfHZgQIsZpqKA_q5Dj7yQG3rkTIvEdinKil0MH-nd1d7SGeiuJK7W_Q5xoJpxy8Q6Ytt5mOC6VDZwaA2pXJnWL3m-YQVLFy0hRvYjxEh6Udk0Jw1Ow_rvgktQAZxuXlxd3ZWrry4pXXyB9CJUcsBNfaBSdRCj-V_6tKvAYZ_RWmU7_GFDhJ1r6UL8LEAI-FDQOenLiwKyYAHM30AQqN-b15Tc4KZgKh9_yjBqHjLAT3wiUfiZpj7asrvviK0RkFvps_liSoCeradLPSCDRn9e0DRhigSDueRDRpuCH2hd2RoYleBrLyvVvwey4JE3Tgw2LVB5Hij5nzMzKAvhWtlWJb0478VInm2hh3IgT8-wH9B8a8bChz2sgEBZBhqpFJwQF9FvouXgG30HuOpR9QQEOqldORDmuNw9MisDatYXE2-z8CiEBBei64H0ZUCJfJcWeemKwIm7KYpE2kaXKRVQGFrZ5WTn65CwiXkkUf9ExnulFDVfpfpTePKtRWBb2JluffPqBIhUJ2iGOCIDSb9XkLGrRQRIMq9HQ9MIUeSYGBjWnmNjrSpZ8sH-JB11TIk2Z9q90W36V_W-YwIgE9kSJPr2ZciDGajgznQgwQB72R_7JwKOzTekhAsSA9sln5EWVZCsJi0sWDpCserdvw8Fd6rTNRwisNB2M6uAbVIemCTwceXDjB9mJYd1rE2IeFpTcyDDzUx-ZsOOH8sQ5l5Ul9pbY-sm41l_xb8nFDuOyXrsmbNY7XnffjKsy6Ea3pjp9nBgiITda-lAOuCLTDNZ1vLuTIxKMKMMjB3K1G0WmVUYkGelLKNWPMvy7VX5iEY5Its73mw5mbW8KUguGl7XafL8rwgA2Obuy7DnSo_yU9D3qsWAgjonyASfBthgENXZl9iq6ietnvkCeixV9UaJ-6Tefl4meZa1NmkFZBWUGKa99ucKSVEtJ064IsIDehkUO-yKysq4KwMEV8TX4VlcV5SbKirnY5cxiTerWDPHDL_h0bhda_oZc7MvCSEbHZyp8zenBQgdK-iGtiVByPQel_VvisONNSvIA5XAEO7eGB2V2acuqK3b_cawrJexRo20IFm1n2u0GnD5oAhuFdjb7zG84k0BUSOqSDzvxAl0nh4zokwERXDjxU0dzBEnHx2VFJQqK-Zhm31Jf6sQcA5NsueS9JllsFl_OmFDp1Rf2I",
+    status: "planned",
+    rating: 0,
+    id: 8
+  },
+  {
+    title: "Бойцовский клуб",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98qdERlg_skSeiloRzyQlUavq0uv0eWCW93guvmiQWjSES-_pVc1K7_QZSRFYEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "planned",
+    rating: 9.1,
+    id: 9
+  },
+  {
+    title: "Шерлок Холмс",
+    image: "https://kinopoisk-ru.clstorage.net/FF1x58147/583fd04lcUZ/7ibCfCIaxrcfwTmqQ8lAPblCwVRTUyWZC55UU20jZmqX_pQ45ZSyi98rNEXlwDtlyeol9IjwwQFPPrmv_9OWCW62Vivw3MV2SEZq6sFJFLqqVNZEAQEwCAzagwW66Kpgm3TIsWpeuoDHeqRV45cssxn6syPNZoSQ36I36uLPg1nkqkixJcCG_ZOWuewKDIM6Z0jBUAEaZloTURdZb6qnLF_1h_HqVn5JwHWsnX4ZZHHS-LahACVU31noPLOmys-RrOYG8C9ACDCfV3euCUHHd6xKQV0DVG6QFNhaEqcipuyZ8Ar-JBV_Awc1ZJ12V207lzI1b4eqFlhQ7TG3qI7HV-jnCX6jjcy-V1d5asGOSnJmwoybDdBsnptdFxWna2FiXreL-KvUMAmIeqoWOFQnNBQ--6RKYJzXEyvy8OnKxFTnacdxpUsOPdeWNu4GDQx5awfCVU3e7Bgb1RzWouKoYRB2QXSvWDdPgPrk2nwQJfkZ_jVqTKbW1RPldbclyACWYCkLumOPDHfZ3jFkAwEMdSoBhJqEEKGdnJCanmhhbCWR-s52p1FxAg50I9u-lGBwFjzwIsxsmR1ZZrS_bgeIVOhoCrOowge33Ra6YIMGRffhQgycCV4v3docFxrnrO8u37mBM6KRsEzNdGuach5k-Vj4ueHEIlpeW-N69iUDiR4iZYA644qGfdNetCGJw8sx4IBOX8Yb5Rcc3FybYO6noJ21SrmtHnqLDDfn0jlf77WQPnzqjS1emduovferik-fYq7A9qJPDnqYEjwuQQNIt6DCSNzGH-RX3Nod2iyuL6WecAkzJFQyy0i56Vl2nSY5GHeyqoXuHpIW7HN-IIXIFq2gg7NiiM18lhZzpgyKyvgiBYuTDJApXl6Wn1Rg5CEoEbrLsmte_ooB_ica89ljfR79ueXA6trRm-Vy_2_OyZ5iKsE5I0uPPB2a96NGzkuy70PFFA3bbtoT2hgYIO6l6lZ0DDmsV_uJRTbqlXNWrrgTf_sgyK9SlZigsPBnysRZayFEcCLABP2YW7lnSkXAu-SJwlNKUKxX3lFe1uvmbWvRvg3y5RG-Q8x_7Z4xWO29kPxwKI0vH5JWrPT3Ig6Gme2hjrIlxE463Zw7K8pCj3PgA4oXCVgnHZqdXNGj4mRqEnkOeCeUtkYEdaAZOZ4s9d71euVDKFYYH6A5cCKDx5BipUpzpgfHelHZeilOy8rxZIjA0cIXrdJSFh0WrSQgZpc_i7_jXvkEx_zq2LPdZPzbffwrhWBZX9hhPH7uz0ZU7iKKeOJMT_XY2DLhw04JsSjPTdvBmqZQXJqTWqejbu7YdYv4I5K4xAHyZNkxl-t1ln22qwBq396XITlzLohHHaIrTrjsQkmz0db-YQPCCndmBImdQRAq1Fxc090jLm8lVbwOvmOVM4PN8WtU-FGo_Rg4M2kMKVRYlGZ2diVCw9HtYsA4a4yHNxAS9afFS4T9rsIE004UbxXSmR1dpi1ppBg3yXSq0DpCRnqqG_oZ7bgWOPJtBW9e3VpnufptzQ7VoOjLNucBiDKYm_3gQI2A_iSDCNUBHmVYVREVmaimp2yYcgY6INxyQ8HzqFr4WWN12r86q8Etl55WZrW5JkrHVWSuQLWsQYH1Ell0a44DxXHvCQ6cyVpi395Z1VTo763tmbYMOijSsk-N_6DbeNWt8tmwMWUILRrSXOuyM6bKQ9Zq4Av9JM3GtZNWvK5CAwN160BCE0rfIt3bWhxRaOIlIJUxx_8rXvoAQfYrXftbo_WWPHTvhyaWn9Apdn9pikNY7KdPu-5NCX0dnPoiwQqHcyALCppJV-qQ21mbk-UtKeReMUa3pJD6TMW-Z5XxXOX21LwxqUynHF3X47L044aM2GNoT7RkSMF8WFz0qULMj_6nzMxbixkp0R5eF1Wt7CTp3bbFPiefdg_EtOAecNNgdBq_OiALZZVRX6Dx_y9CTxWrqwc4LgqDfB6Tfu-KyIXxI4xOWoIU5xfbn1_aLmurqFFwRPmt1j9EzfrjXHOYpDxQ_zoiCueW3NalNnpnTQtdZyVGOaKChn8Xl30pxMFE_eDCyVSCGW9WVB5UXmzh72pesMa7YFp2RAC14pazVSa23_q0YUDol11RK_E_5sXM3ituDzRujEfymF996cINC_0sSwYVglFlGpIa0Bav5y3uW3GP_mpVMsvJfylYcVUsvB84_mlMbJodX-WwfOjEz9ag4sFxJIKPNdkT9CaIC424Iw3KnURU51aQFFaTpeOurtbxjjJiGDpBD30i07zb7XIfMr6rDWDTERCm8vOtBEmQqm8O-yVMjPdZn7ejCwxB_2DNCV3CnKWZVNXfFWjkp-AQPAN6YpR9xwg34xr-k2pyU7i25ECiHZmebvL3IEiH1-onD3Bvy4l4lZT6LINEDf2ihM3TTdYp3t5Q2h6rrGbrmv0E82wXcwhNt-UbNhAlvJNy9WgBbxQRUyG4cKPFT1WnZsj6b8EO-J6b_OJGDQxxLgzOUAFeLh-d0ZPc7ClrI1E-xTbtmLjHgLwqGnOXK3Fa9nSkDClelxfucX-rxEgeay4I-qLHD33Vkz7vispDPejIhVOE3-CQ3NfdGSMraSKVtY37L1pzw862ahUwmWa7GzRyK0_nHB-RbzE5YErNneQuiLUiw4OyVRc7Yo1ByTopC0RZgtqkGdAf153no-vumbiLt6PVOw6BvWTd9VDuehs4vOSNYRlaESVxNmDAjdCuIUJ67YyJ-ldesqlExMH_oYfME0YW4laaV1WRLKMjLJY5wj4t1niOQX2q1D3bo_0W_j1hySQWnBJo8rmmRcvc6y_L_uLCSLpYH_6viwzP-CJMQhTF2GFWkxDYkeek4ShRNkV6Z9c6A0UyZJjxlCT62Xy84MLlnpHQaLy6pQ9E3aQhDrmkAMP_EBayp8nCRTKnjcKUTB6skFTYnVnq6mkkUP-Ef-9Wd45AfKjYcRvr_V699CDEIlXQ1k",
+    status: "planned",
+    rating: 8.3,
+    id: 10
+  },
+];
+
+// File: c:\Users\rom4i\projects\shelfie\src\features\filters.tsx
+export function filterByStatus(items, status) {
+    return items.filter(item => item.status === status);
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\index.css
+:root {
+  --bg-main: #12151B;
+  --bg-card: #191C23;
+  --text-primary: #F6F8FB;
+}
+
+a {
+  text-decoration: none;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  background-color: var(--bg-main);
+}
+
+.layout-container {
+  max-width: 106.8rem;
+  margin: 0 auto;
+}
+
+main {
+  padding-top: 4.6rem;
+}
+
+.flex-lib-container {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 2rem;
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\main.tsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import { MediaProvider } from './context/context.tsx'
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <MediaProvider>
+      <App />
+    </MediaProvider>
+  </StrictMode>
+)
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\pages\HomePage.tsx
+import ScrollableRow from "../components/ScrollableRow/ScrollableRow"
+
+export default function HomePage() {
+    return (
+        <>
+            <ScrollableRow status={"watching"} />
+            <ScrollableRow status={"planned"} />
+            <ScrollableRow status={"finished"} />
+        </>
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\pages\ItemPage.tsx
+
+
+// File: c:\Users\rom4i\projects\shelfie\src\pages\LibraryPage.tsx
+import ItemLibrary from "../components/ItemLibrary/ItemLibrary";
+import FilterPanel from "../components/FilterPanel/FilterPanel";
+
+export default function LibraryPage() {
+    return (
+        <div className="flex-lib-container layout-container">
+            <ItemLibrary />
+            <FilterPanel />
+        </div>
+    )
+}
+
+// File: c:\Users\rom4i\projects\shelfie\src\pages\ProfilePage.tsx
+
+

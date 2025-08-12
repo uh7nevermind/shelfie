@@ -1,16 +1,12 @@
-import Navbar from "../components/Navbar/Navbar";
+import ScrollableRow from "../components/ScrollableRow/ScrollableRow"
+import ModalAddItem from "../components/ModalAddItem/modalAddItem"
 
 export default function HomePage() {
     return (
         <>
-            <main>
-                <div className="scrollable-containers">
-                    <ItemContainer category={"currently watching"} viewMode={"scroll"} />
-                    <ItemContainer category={"want to watch"} viewMode={"scroll"} />
-                    <ItemContainer category={"watched"} viewMode={"scroll"} />
-                </div>
-                <FilterPanel className="filter-panel" />
-            </main>
+            <ScrollableRow status={"watching"} />
+            <ScrollableRow status={"planned"} />
+            <ScrollableRow status={"finished"} />
         </>
     )
 }

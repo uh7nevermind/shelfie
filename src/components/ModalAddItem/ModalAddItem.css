@@ -1,0 +1,9 @@
+.add-item {
+    background-color: var(--bg-card);
+    width: 700px;
+    height: 400px;
+}
+
+form.add-item input {
+    width: 55%;
+}
