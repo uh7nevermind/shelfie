@@ -22,7 +22,7 @@ form[class="filter-panel-container"] input.search-bar {
 .filter-panel-inner {
     padding: 1rem;
     padding-top: 0;
-    display: flex;
+    display: flex; /* Заменить на грид */
     flex-direction: column;
     gap: 1.5rem;
 }
@@ -31,6 +31,13 @@ form[class="filter-panel-container"] input.search-bar {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.filter-inputs-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.2rem;
 }
 
 .block-label {
@@ -55,7 +62,7 @@ input[type=number] {
 form.filter-panel-container select, 
 form.filter-panel-container input, 
 form.filter-panel-container button {
-  max-width: 11rem;
+  max-width: 14.8rem;
 }
 
 form.filter-panel-container input::placeholder {

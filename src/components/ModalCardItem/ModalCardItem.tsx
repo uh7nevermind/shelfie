@@ -70,7 +70,7 @@ export default function ModalCardItem() {
                             }}
                             
                             sx={{
-                                fontSize: 26,
+                                fontSize: 36,
                                 "& .MuiRating-iconEmpty": {
                                     color: "#3A3F4A",
                                 },
@@ -108,7 +108,7 @@ export default function ModalCardItem() {
                         className="modal-button cancel-sqr" 
                         onClick={() => navigate(-1)}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="cross-svg">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
                     </button>

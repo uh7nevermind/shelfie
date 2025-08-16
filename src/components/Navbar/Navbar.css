@@ -1,5 +1,5 @@
 header {
-    height: 4.6rem;
+    height: 6rem;
     background-color: var(--bg-card);
     color: var(--text-primary);
     position: fixed;
@@ -11,7 +11,6 @@ header {
 
 .navbar {
     height: 100%;
-    
     display: flex;
     align-items: center;
 }
@@ -19,7 +18,7 @@ header {
 .logo{
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 2.4rem;
+    font-size: 3.2rem;
     margin: 0 2rem;
 }
 
@@ -46,7 +45,7 @@ header li a {
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     transition: color 0.2s;
 }
 
@@ -55,8 +54,8 @@ header li a:hover {
 }
 
 svg {
-    width: 1.7rem;
-    height: 1.7rem;
+    width: 2.3rem;
+    height: 2.3rem;
 }
 
 .vertical-line {
@@ -65,7 +64,7 @@ svg {
     height: 50%;
 }
 
-svg.plus-svg {
-    width: 2rem;
-    height: 2rem;
+svg.plus-nav-svg {
+    width: 2.6rem;
+    height: 2.6rem;
 }

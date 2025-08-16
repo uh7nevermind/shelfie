@@ -3,7 +3,7 @@
     display: flex;
     gap: 1.5rem;
     width: 100%;
-    max-width: 65rem;
+    max-width: 86.5rem;
     margin: 10rem auto;
     padding: 1.5rem;
     background-color: var(--bg-card);
@@ -44,7 +44,7 @@ div.modal-card-item h2 {
 .genre {
     list-style: none;
     color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 1.3rem;
 }
 
 .item-overview {
@@ -69,7 +69,7 @@ div.modal-card-item h2 {
 }
 
 .rating-value {
-    font-size: 3rem;
+    font-size: 3.6rem;
     font-weight: 800;
 }
 
@@ -82,8 +82,8 @@ div.modal-card-item h2 {
 }
 
 .rating-label {
-    font-size: 1.6rem;
-    font-weight: 800;
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .modal-buttons-item-card-container {

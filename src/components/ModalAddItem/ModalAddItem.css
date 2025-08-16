@@ -1,17 +1,17 @@
 .add-item {
     background-color: var(--bg-card);
-    width: 700px;
+    width: 86.5rem;
     height: 400px;
 }
 
 form.add-item input {
     max-width: 42rem;
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
 }
 
 div.modal-overlay form.add-item button.category-toggle {
-  padding: 8px 14px;
+  height: 100%;
   border: 1px solid var(--apply-button-bg);
   border-radius: 6px;
   background-color: var(--apply-button-bg);

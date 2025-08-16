@@ -7,13 +7,12 @@ export default function Item ({ item = null, type = false, className }) {
 
     return type ? (
          <Link
-            to={`/${item.id}`}
+            to={`/add`}
             state={{ background: location }}
             className='add-card'
          >
-            <span></span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="plus-svg">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="plus-svg">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
             <p>Добавить в коллекцию</p>
          </Link>
@@ -26,7 +25,7 @@ export default function Item ({ item = null, type = false, className }) {
                 <img src={item.image} />
                 <div className='item-card-desc'>
                     <h3 className='item-card-title'>{item.title}</h3>
-                    <p>{statusLabels[item.status]}</p>
+                    <p className='item-card-status'>{statusLabels[item.status]}</p>
                 </div>
         </Link>
 

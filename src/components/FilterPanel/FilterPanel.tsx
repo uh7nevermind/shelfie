@@ -20,7 +20,7 @@ export default function FilterPanel() {
                 <fieldset className="filter-panel-group">
                     <legend className="sr-only">Фильтры по категории и статусу</legend>
 
-                    <div className="flex between">
+                    <div className="filter-inputs-line">
                         <label htmlFor="category" className="sr-only">Категория</label>
                         <select name="category">
                             <option value="" selected hidden>Категория</option>
@@ -42,7 +42,7 @@ export default function FilterPanel() {
                 <fieldset className="filter-panel-group">
                     <legend className="sr-only">Тип сортировки и порядок</legend>
                     
-                    <div className="flex between group-margin">
+                    <div className="filter-inputs-line group-margin">
                         <label htmlFor="sortBy">Сортировать по:</label>
                         <select name="sortBy">
                             {filterOptions.sort.by.map(({ label, value }) => (
@@ -51,7 +51,7 @@ export default function FilterPanel() {
                         </select>
                     </div>
                     
-                    <div className="flex between">
+                    <div className="filter-inputs-line">
                         <label htmlFor="sortOrder">Порядок: </label>
                         <select name="sortOrder">
                             {filterOptions.sort.order.map(({ label, value }) => (
@@ -65,7 +65,7 @@ export default function FilterPanel() {
                     <legend className="sr-only">Фильтры по дате просмотра</legend>
 
                     <label htmlFor="watchedDateType" className="block-label">Дата просмотра:</label>
-                    <div className="flex between">
+                    <div className="filter-inputs-line">
                         <select name="watchedDateType">
                             {filterOptions.watchedDate.map(({ label, value }) => (
                                 <option key={value} value={value}>{label}</option>
@@ -79,7 +79,7 @@ export default function FilterPanel() {
                     <legend className="sr-only">Фильтры по рейтингу</legend>
                     
                     <label className="block-label">Личный рейтинг:</label>
-                        <div className="flex between">
+                        <div className="filter-inputs-line">
                             {filterOptions.rating.personal.map(({ label, type }) => (
                                 <input 
                                     name={`${type}PersonalRating`} 
@@ -94,7 +94,7 @@ export default function FilterPanel() {
                         </div>
                     
                     <label className="block-label margin-label">IMDB рейтинг:</label>
-                        <div className="flex between">
+                        <div className="filter-inputs-line">
                             {filterOptions.rating.imdb.map(({ label, type }) => (
                                 <input 
                                     name={`${type}ImdbRating`} 
@@ -111,7 +111,7 @@ export default function FilterPanel() {
 
                 <fieldset className="filter-panel-group">
                     <legend className="sr-only">Сбросить или применить фильтры</legend>
-                    <div className="flex between">
+                    <div className="filter-inputs-line">
                         <button type="reset">Сбросить</button>
                         <button type="submit">Применить</button>
                     </div>

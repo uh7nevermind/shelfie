@@ -1,8 +1,8 @@
 .library-section {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20.5rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(27rem, 1fr));
     width: 75%;
     height: fit-content;
-    gap: 1.6rem;
+    gap: 1.8rem;
     margin: 0;
 }

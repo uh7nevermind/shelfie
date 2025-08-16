@@ -10,11 +10,11 @@ export default function ScrollableRow ({ status, title }) {
     const scrollRef = useRef(null);
     const filteredItems = filterByStatus(items, status);
     function scrollLeft() {
-        scrollRef.current?.scrollBy({ left: -1084, behavior: 'smooth' })
+        scrollRef.current?.scrollBy({ left: -1420, behavior: 'smooth' })
     }
 
     function scrollRight() {
-        scrollRef.current?.scrollBy({ left: 1084, behavior: 'smooth' })
+        scrollRef.current?.scrollBy({ left: 1420, behavior: 'smooth' })
     }
 
     return (

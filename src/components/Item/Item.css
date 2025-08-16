@@ -12,8 +12,8 @@
 }
 
 .item-card--fixed {
-    width: 25.5rem; 
-    height: 13rem;
+    width: 33.4rem; 
+    height: 17rem;
     flex-shrink: 0;
 }
 
@@ -47,29 +47,34 @@ img {
     text-overflow: ellipsis;
 }
 
+.item-card-status {
+    font-size: 1.6rem;
+    font-weight: 300;
+}
+
 .add-card {
-    height: 13rem;
-    width: 25.5rem;
+    width: 33.4rem; 
+    height: 17rem;
     background-color: rgba(255, 255, 255, 0.05);
     border: 2px dashed rgba(255, 255, 255, 0.1);
-    color: rgba(246, 248, 251, 0.4);
+    color: var(--text-add-card);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    border-radius: 8px;
+    border-radius: 10px;
     user-select: none;
 }
 
 .add-card:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* чуть более яркий фон */
-    color: rgba(246, 248, 251, 0.7); /* более контрастный текст */
-    border-color: rgba(246, 248, 251, 0.3); /* более заметная рамка */
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(246, 248, 251, 0.7);
+    border-color: rgba(246, 248, 251, 0.3);
 }
 
 .plus-svg {
-    height: 4.5rem;
-    width: 4.5rem;
+    height: 6rem;
+    width: 6rem;
 }

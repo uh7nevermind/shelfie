@@ -7,7 +7,7 @@
 
 .scroll-container {
     display: flex;
-    gap: 1.6rem;
+    gap: 2.1rem;
     overflow-x: auto;
     scroll-behavior: smooth;
     margin-top: 1.5rem;
@@ -26,8 +26,8 @@
     position: absolute;
     top: 49%; /* центр по высоте родителя */
     z-index: 1000;
-    width: 4.8rem;
-    height: 4.8rem;
+    width: 6.2rem;
+    height: 6.2rem;
     background-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
     color: white;
@@ -50,10 +50,10 @@
 }
 
 .left {
-    left: -2.4rem;
+    left: -3.3rem;
 }
 
 .right {
-    right: -2.4rem;
+    right: -3.1rem;
 }
 

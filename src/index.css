@@ -4,6 +4,7 @@
   --border-card: rgba(255,255,255,0.05);
   --text-primary: #F6F8FB;
   --text-secondary: rgba(255,255,255,0.65);
+  --text-add-card: rgba(246, 248, 251, 0.4);
   --input-bg: #1F232C;  
   --input-text: var(--text-primary);
   --input-border: #2A2E38;
@@ -20,11 +21,11 @@ a {
 }
 
 h2 {
-  font-size: 2.4rem;
+  font-size: 2.6rem;
 }
 
 h3 {
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 
 * {
@@ -39,7 +40,7 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: var(--text-primary);
   background-color: var(--bg-main);
 }
@@ -63,12 +64,12 @@ body {
 }
 
 .layout-container {
-  max-width: 106.8rem;
+  max-width: 140rem;
   margin: 0 auto;
 }
 
 main {
-  padding-top: 4.6rem;
+  padding-top: 6rem;
 }
 
 .flex-lib-container {
@@ -114,7 +115,7 @@ button {
   border: 1px solid var(--input-border);
   padding: 0.6rem 0 0.6rem 0.6rem;
   border-radius: 6px;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -137,7 +138,7 @@ button {
 .apply {
   background-color: var(--apply-button-bg);
   color: var(--text-primary);
-  padding: 6px 12px;
+  padding: 7px 16px;
   border: 2px solid transparent;
 }
 
@@ -166,6 +167,11 @@ button {
   filter: brightness(0.85);
 }
 
+.cross-svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
 .delete {
   background-color: rgba(255, 77, 77, 0.15); /* полупрозрачный красный фон */
   border: 1px solid rgba(255, 77, 77, 0.4);
@@ -190,8 +196,8 @@ button {
 
 .delete svg {
   transform: translateX(0px);
-  height: 1.8rem;
-  width: 1.8rem;
+  height: 2.4rem;
+  width: 2.4rem;
 }
 
 fieldset {
