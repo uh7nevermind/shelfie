@@ -8,19 +8,16 @@ export default function Navbar() {
                 <div className='nav-container'>
                     <ul>
                         <li>
-                            <a href="/something">Фильмы</a>
+                            <a href="/test">Тест</a>
                         </li>
                         <li>
-                            <a href="/something">Сериалы</a>
-                        </li>
-                        <li>
-                            <a href="/">Домой</a>
+                            <a href="/">Главная</a>
                         </li>
                         <li>
                             <a href="/library">Библиотека</a>
                         </li>
                     </ul>
-                    <ul>
+                    <ul className="right-part">
                         <li>
                             <a href="/something">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" >
@@ -31,12 +28,20 @@ export default function Navbar() {
                         <span className='vertical-line'></span>
                         <li>
                             <a href="/something">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className='plus-svg'>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </a>
+                        </li>
+                        {/* <span className='vertical-line'></span>
+                        <li>
+                            <a href="/something">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" >
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                                 </svg>
                                 Войти
                             </a>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>

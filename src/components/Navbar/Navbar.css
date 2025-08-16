@@ -64,3 +64,8 @@ svg {
     border-left: solid 1px gray;
     height: 50%;
 }
+
+svg.plus-svg {
+    width: 2rem;
+    height: 2rem;
+}

@@ -5,7 +5,6 @@ export const filterOptions: FilterOptions = {
         { label: "Все", value: "all" },
         { label: "Фильмы", value: "films" },
         { label: "Сериалы", value: "series" },
-        { label: "Аниме", value: "anime" },
     ],
     status: [
         { label: "Все", value: "all" },

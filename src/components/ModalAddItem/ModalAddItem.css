@@ -5,5 +5,22 @@
 }
 
 form.add-item input {
-    width: 55%;
+    max-width: 42rem;
+    width: 100%;
+    font-size: 1.6rem;
+}
+
+div.modal-overlay form.add-item button.category-toggle {
+  padding: 8px 14px;
+  border: 1px solid var(--apply-button-bg);
+  border-radius: 6px;
+  background-color: var(--apply-button-bg);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 8.5rem;
+}
+
+.category-toggle:hover {
+  background-color: var(--apply-button-bg-hover);
 }

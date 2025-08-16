@@ -1,4 +1,4 @@
-import ModalCardItem from "../components/ModalCardItem/ModalCardItem"
+import ModalAddItem from "../components/ModalAddItem/modalAddItem";
 import { useMedia } from "../context/context";
 
 export default function TestPage() {
@@ -7,6 +7,6 @@ export default function TestPage() {
     console.log('items:', items);
 
     return (
-        <ModalCardItem item={items[0]} />
+        <ModalAddItem/>
     )
 }
